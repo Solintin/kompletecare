@@ -33,9 +33,15 @@
       </div>
       <button
         @click="userLogin"
-        class="mt-5 outline-none w-full py-3 bg-blue-600 text-white text-xl font-medium rounded-md hover:bg-blue-700 transform-translate duration-500"
+        class="px-5 flex justify-center mt-5 outline-none w-full py-3 bg-blue-800 text-white text-lg rounded-md hover:bg-blue-900 transform-translate duration-500"
       >
-        Login
+        <span v-if="!loading">Login</span>
+        <div v-else class="flex justify-center items-center space-x-4">
+          <div
+            class="h-6 w-6 rounded-full border-4 border-t-green-600 border-r-green-600 border-b-green-100 border-l-green-100 animate-spin"
+          ></div>
+          <span> login in... </span>
+        </div>
       </button>
       <h3 class="text-center text-red-500 font-medium my-4" v-if="error">
         {{ error }}

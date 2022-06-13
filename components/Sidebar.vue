@@ -226,7 +226,7 @@
         <div class="flex-grow">Contact Support</div>
       </nuxt-link>
       <nuxt-link
-        to="#"
+        to="/"
         class="link cursor-pointer hover:text-white text-gray-500 hover:font-bold w-full flex items-center tranform-translate duration-400 hover:bg-blue-800 pl-8 space-x-5 py-2"
       >
         <div class="w-6">

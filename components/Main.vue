@@ -106,10 +106,15 @@
           <div class="flex justify-end">
             <button
               @click="handleSubmit"
-              class="px-5 mt-5 outline-none max-w-max py-3 bg-blue-800 text-white text-lg rounded-md hover:bg-blue-900 transform-translate duration-500"
+              class="px-5 flex justify-center mt-5 outline-none max-w-max py-3 bg-blue-800 text-white text-lg rounded-md hover:bg-blue-900 transform-translate duration-500"
             >
-            <span v-if="loading"></span>
-              Save and Send
+              <span v-if="!loading">Save and Send</span>
+              <div v-else class="flex justify-center items-center space-x-4">
+                <div
+                  class="h-6 w-6 rounded-full border-4 border-t-green-600 border-r-green-600 border-b-green-100 border-l-green-100 animate-spin"
+                ></div>
+                <span> Submitting </span>
+              </div>
             </button>
           </div>
           <h1 v-if="error" class="text-right text-red-500 font-medium">
@@ -117,13 +122,12 @@
           </h1>
         </div>
       </div>
+      <SuccessModal
+        :openModal="openModal"
+        :message="'Form Submitted Successfully'"
+        :id="submissionId"
+      />
     </div>
-    <SuccessModal
-      v-if="openModal"
-      :openModal="openModal"
-      :message="'Form Submitted Successfully'"
-      :id="submissionId"
-    />
   </div>
 </template>
 
@@ -212,6 +216,8 @@ export default {
     },
     handleSubmit() {
       if (!this.handleFormValidation()) {
+        this.loading = true
+
         this.$apollo
           .mutate({
             mutation: gql`
@@ -254,16 +260,6 @@ export default {
     },
   },
 
-  //   MUTATION
-
-  //QUERY
-
-  // {
-  // 	 "investigations": [8,9,5],
-  //   "ctscan": "Scan needed in the left cerebral hemisphere",
-  //   "mri": "Full body MRI",
-  //   "developer": "Developer"
-  // }
 }
 </script>
 
