@@ -171,6 +171,10 @@ export default {
       )
       this.data = true
     }
+    setTimeout(() => {
+      this.data = true
+    }, 2000)
+
     console.log(this.$apollo.loading)
   },
 
