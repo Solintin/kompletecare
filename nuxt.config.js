@@ -11,7 +11,7 @@ export default {
       { hid: 'description', name: 'description', content: '' },
       { name: 'format-detection', content: 'telephone=no' },
     ],
-    
+
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
 
@@ -36,21 +36,23 @@ export default {
     '@nuxtjs/axios',
     //apollo connection with nuxt
     '@nuxtjs/apollo',
+
   ],
-    //Apollo Setup
+  //Apollo Setup
   apollo: {
     clientConfigs: {
-        default: {
-            httpEndpoint: process.env.GRAPHQL_ENDPOINT,
-            httpLinkOptions: {
-                credentials: 'same-origin'
-            },
-            tokenName: 'token-name'
-        }
+      default: {
+        httpEndpoint: process.env.GRAPHQL_ENDPOINT,
+        httpLinkOptions: {
+          credentials: 'same-origin',
+        },
+        tokenName: 'apollo-token',
+      },
     },
-    authenticationType: 'Bearer'
-},
+    authenticationType: 'Bearer',
+  },
 
+  
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {

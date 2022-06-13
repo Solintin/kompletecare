@@ -33,10 +33,13 @@
       </div>
       <button
         @click="userLogin"
-        class="mt-5 outline-none w-full py-4 bg-blue-600 text-white text-xl font-medium rounded-md hover:bg-blue-700 transform-translate duration-500"
+        class="mt-5 outline-none w-full py-3 bg-blue-600 text-white text-xl font-medium rounded-md hover:bg-blue-700 transform-translate duration-500"
       >
         Login
       </button>
+      <h3 class="text-center text-red-500 font-medium my-4" v-if="error">
+        {{ error }}
+      </h3>
     </div>
   </div>
 </template>
@@ -55,10 +58,14 @@ export default {
     return {
       email: 'tester@kompletecare.com',
       password: 'password',
+      error: null,
+      loading: false,
     }
   },
   methods: {
-    userLogin() {
+    async userLogin() {
+      this.error = ''
+      this.loading = true
       this.$apollo
         .mutate({
           mutation: gql`
@@ -73,8 +80,14 @@ export default {
         })
         .then((res) => {
           const token = res.data.login
-          localStorage.setItem('apollo-token', token)
+          this.$apolloHelpers.onLogin(token)
+          this.loading = false
+
           this.$router.push('/dashboard')
+        })
+        .catch((err) => {
+          this.error = err.message
+          this.loading = false
         })
     },
   },
