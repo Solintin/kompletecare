@@ -42,7 +42,7 @@ export default {
   apollo: {
     clientConfigs: {
       default: {
-        httpEndpoint: process.env.GRAPHQL_ENDPOINT,
+        httpEndpoint: "https://testdrive.kompletecare.com/graphql",
         httpLinkOptions: {
           credentials: 'same-origin',
         },
