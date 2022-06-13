@@ -29,6 +29,9 @@ export default {
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
   ],
+  generate: {
+    fallback: true,
+  },
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
@@ -36,13 +39,12 @@ export default {
     '@nuxtjs/axios',
     //apollo connection with nuxt
     '@nuxtjs/apollo',
-
   ],
   //Apollo Setup
   apollo: {
     clientConfigs: {
       default: {
-        httpEndpoint: "https://testdrive.kompletecare.com/graphql",
+        httpEndpoint: 'https://testdrive.kompletecare.com/graphql',
         httpLinkOptions: {
           credentials: 'same-origin',
         },
@@ -51,6 +53,5 @@ export default {
     authenticationType: 'Bearer',
   },
 
-  
-target: 'serverless'
+  target: 'serverless',
 }
