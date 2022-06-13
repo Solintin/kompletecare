@@ -108,12 +108,22 @@
               @click="handleSubmit"
               class="px-5 mt-5 outline-none max-w-max py-3 bg-blue-800 text-white text-lg rounded-md hover:bg-blue-900 transform-translate duration-500"
             >
+            <span v-if="loading"></span>
               Save and Send
             </button>
           </div>
+          <h1 v-if="error" class="text-right text-red-500 font-medium">
+            Submission failed: incomplete form.
+          </h1>
         </div>
       </div>
     </div>
+    <SuccessModal
+      v-if="openModal"
+      :openModal="openModal"
+      :message="'Form Submitted Successfully'"
+      :id="submissionId"
+    />
   </div>
 </template>
 
@@ -128,11 +138,10 @@ export default {
       ctscan: '',
       investigations: [],
       mri: '',
-      validation: {
-        ctscan: true,
-        investigations: true,
-        mri: true,
-      },
+      error: false,
+      openModal: false,
+      submissionId: null,
+      loading: false,
     }
   },
   apollo: {
@@ -169,7 +178,6 @@ export default {
       this.mri = event.target.value
     },
     handleInvestigations(event, value) {
-      console.log(event.target.checked)
       if (event.target.checked) {
         //Check if test id exist in the previous investigation array
         let isExist = false
@@ -189,7 +197,6 @@ export default {
           (item) => item === parseInt(value)
         )
         this.investigations.splice(index, 1)
-        console.log('investigations:', this.investigations)
       }
     },
     handleFormValidation() {
@@ -205,31 +212,49 @@ export default {
     },
     handleSubmit() {
       if (!this.handleFormValidation()) {
-        console.log('ctscan:', this.ctscan)
-        console.log('mri:', this.mri)
-        console.log('investigations:', this.investigations)
+        this.$apollo
+          .mutate({
+            mutation: gql`
+              mutation add_medical_record(
+                $ctscan: String!
+                $developer: String!
+                $investigations: [ID!]!
+                $mri: String!
+              ) {
+                add_medical_record(
+                  ctscan: $ctscan
+                  developer: $developer
+                  investigations: $investigations
+                  mri: $mri
+                ) {
+                  id
+                }
+              }
+            `,
+            variables: {
+              investigations: this.investigations,
+              ctscan: this.ctscan,
+              mri: this.mri,
+              developer: 'Developer',
+            },
+          })
+          .then((res) => {
+            this.openModal = true
+            this.loading = false
+
+            this.submissionId = res.data.add_medical_record.id
+          })
+          .catch((err) => {
+            this.error = err.message
+            this.loading = false
+          })
+      } else {
+        this.error = true
       }
-      console.log("error exist");
     },
   },
 
   //   MUTATION
-
-  // mutation add_medical_record(
-  // $ctscan: String!
-  // $developer: String!
-  // $investigations: [ID!]!
-  // $mri: String!
-  // ) {
-  // add_medical_record(ctscan : $ctscan,
-  //   developer: $developer,
-  //   investigations: $investigations,
-  // 	mri : $mri
-  // ){
-  // 	id,
-  //   mri
-  // }
-  // }
 
   //QUERY
 
