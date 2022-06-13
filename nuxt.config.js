@@ -53,5 +53,5 @@ export default {
     authenticationType: 'Bearer',
   },
 
-  target: 'serverless',
+  target: 'static',
 }
