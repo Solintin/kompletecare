@@ -15,10 +15,7 @@
       </p>
 
       <div class="mt-10 rounded-md shadow box mb-10 bg-white">
-        <div
-          class="text-center my-40 font-medium text-xl"
-          v-if="$apollo.loading || typeA === null"
-        >
+        <div class="text-center my-40 font-medium text-xl" v-if="!data">
           Loading.....
         </div>
         <div v-else>
@@ -146,6 +143,7 @@ export default {
       openModal: false,
       submissionId: null,
       loading: false,
+      data: false,
     }
   },
   apollo: {
@@ -171,7 +169,9 @@ export default {
       this.typeB = this.investigation_types.find(
         (item) => item.title.toLowerCase() === 'ultrasound scan'
       )
+      this.data = true
     }
+    console.log(this.$apollo.loading)
   },
 
   methods: {
@@ -259,7 +259,6 @@ export default {
       }
     },
   },
-
 }
 </script>
 
