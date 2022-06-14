@@ -5,7 +5,7 @@ f
   <section>
     <div
       v-show="isOpen"
-      @click="isOpen = !isOpen"
+      @click="closeModal"
       :class="isOpen ? '  block' : '   hidden'"
       class="px-10 flex justify-center cursor-pointer items-center overlay transform transition duration-300"
     ></div>
@@ -14,9 +14,7 @@ f
       :class="isOpen ? '  block' : '   hidden'"
     >
       <div>
-        <i
-          class="fas fa-check-circle  mx-auto"
-        ></i>
+        <i class="fas fa-check-circle mx-auto"></i>
       </div>
       <div class="mt-10 mb-4 text-xl text-green-500 font-medium">
         Congratulations!
@@ -24,7 +22,7 @@ f
       <h3 class="text-[#201E1ECC] text-sm text-center font-medium">
         {{ message }} with id no: {{ id }}
       </h3>
-      <button class="w-full back" @click="isOpen = !isOpen">Go back</button>
+      <button class="w-full back" @click="closeModal">Go back</button>
     </div>
   </section>
 </template>
@@ -41,6 +39,12 @@ export default {
   watch: {
     openModal() {
       this.isOpen = !this.isOpen
+    },
+  },
+  methods: {
+    closeModal() {
+      this.isOpen = !this.isOpen
+      location.reload()
     },
   },
 }
