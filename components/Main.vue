@@ -15,7 +15,10 @@
       </p>
 
       <div class="mt-10 rounded-md shadow box mb-10 bg-white">
-        <div class="text-center my-40 font-medium text-xl" v-if="!data">
+        <div
+          class="text-center my-40 font-medium text-xl"
+          v-if="$apollo.queries.investigation_types.loading"
+        >
           Loading.....
         </div>
         <div v-else>
@@ -118,6 +121,7 @@
             Submission failed: incomplete form.
           </h1>
         </div>
+        
       </div>
       <SuccessModal
         :openModal="openModal"
@@ -134,8 +138,8 @@ export default {
   name: 'main-tab',
   data() {
     return {
-      typeA: null,
-      typeB: null,
+      //   typeA: null,
+      //   typeB: null,
       ctscan: '',
       investigations: [],
       mri: '',
@@ -159,19 +163,30 @@ export default {
       }
     `,
   },
-
-  mounted() {
-    if (!this.$apollo.loading) {
-      this.typeA = this.investigation_types.find(
+  computed: {
+    typeA() {
+      return this.investigation_types.find(
         (item) => item.title.toLowerCase() === 'x-ray'
       )
-
-      this.typeB = this.investigation_types.find(
+    },
+    typeB() {
+      return this.investigation_types.find(
         (item) => item.title.toLowerCase() === 'ultrasound scan'
       )
-      this.data = true
-    } else {
-    }
+    },
+  },
+
+  mounted() {
+    // if (!this.$apollo.queries.investigation_types.loading) {
+    //   this.typeA =
+    //   this.typeB = this.investigation_types.find(
+    //     (item) => item.title.toLowerCase() === 'ultrasound scan'
+    //   )
+    //   this.data = true
+    //   console.log(this.investigation_types)
+    //   console.log(this.data)
+    //   console.log(this.$apollo)
+    // }
   },
 
   methods: {
