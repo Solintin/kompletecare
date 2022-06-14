@@ -171,7 +171,6 @@ export default {
       )
       this.data = true
     } else {
-      location.reload()
     }
   },
 
