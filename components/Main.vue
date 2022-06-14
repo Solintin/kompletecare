@@ -170,12 +170,9 @@ export default {
         (item) => item.title.toLowerCase() === 'ultrasound scan'
       )
       this.data = true
+    } else {
+      location.reload()
     }
-    setTimeout(() => {
-      this.data = true
-    }, 2000)
-
-    console.log(this.$apollo.loading)
   },
 
   methods: {
