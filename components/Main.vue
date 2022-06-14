@@ -63,7 +63,7 @@
           </div>
           <hr class="bg-gray-300 w-full my-4" />
 
-          <div class="grid grid-cols-2 gap-6 mt-10">
+          <div class="grid md:grid-cols-2 gap-6 mt-10">
             <div class="flex flex-col">
               <label for="investigation" class="text-gray-500 font-medium"
                 >CT Scan</label
@@ -121,7 +121,6 @@
             Submission failed: incomplete form.
           </h1>
         </div>
-        
       </div>
       <SuccessModal
         :openModal="openModal"
@@ -134,6 +133,7 @@
 
 <script>
 import gql from 'graphql-tag'
+
 export default {
   name: 'main-tab',
   data() {
@@ -174,19 +174,6 @@ export default {
         (item) => item.title.toLowerCase() === 'ultrasound scan'
       )
     },
-  },
-
-  mounted() {
-    // if (!this.$apollo.queries.investigation_types.loading) {
-    //   this.typeA =
-    //   this.typeB = this.investigation_types.find(
-    //     (item) => item.title.toLowerCase() === 'ultrasound scan'
-    //   )
-    //   this.data = true
-    //   console.log(this.investigation_types)
-    //   console.log(this.data)
-    //   console.log(this.$apollo)
-    // }
   },
 
   methods: {
@@ -262,6 +249,7 @@ export default {
           .then((res) => {
             this.openModal = true
             this.loading = false
+            this.error = false
 
             this.submissionId = res.data.add_medical_record.id
           })
@@ -283,5 +271,10 @@ export default {
 }
 .box {
   padding: 45px 60px;
+}
+@media screen and (max-width: 600px) {
+  .box {
+    padding: 2rem 1rem;
+  }
 }
 </style>

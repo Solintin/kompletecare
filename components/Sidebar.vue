@@ -1,6 +1,6 @@
 <template>
   <div class="h-screen overflow-auto pt-32 bg-white shadow-md">
-    <div class="mb-10 flex flex-col space-y-4">
+    <div class="mb-5 flex flex-col space-y-4">
       <div class="w-full flex items-center bg-blue-800 pl-8 space-x-5 py-2">
         <div class="w-6 icon">
           <svg
@@ -28,7 +28,9 @@
             />
           </svg>
         </div>
-        <div class="flex-grow text-white font-bold">Dashboard</div>
+        <div class="hidden md:block flex-grow text-white font-bold">
+          Dashboard
+        </div>
       </div>
       <nuxt-link
         to="#"
@@ -52,7 +54,7 @@
             />
           </svg>
         </div>
-        <div class="flex-grow">Profile</div>
+        <div class="hidden md:block flex-grow">Profile</div>
       </nuxt-link>
       <nuxt-link
         to="#"
@@ -88,7 +90,7 @@
             />
           </svg>
         </div>
-        <div class="flex-grow">Services</div>
+        <div class="hidden md:block flex-grow">Services</div>
       </nuxt-link>
       <nuxt-link
         to="#"
@@ -108,7 +110,7 @@
             />
           </svg>
         </div>
-        <div class="flex-grow"><h2>Medical Records</h2></div>
+        <div class="hidden md:block flex-grow"><h2>Medical Records</h2></div>
       </nuxt-link>
       <nuxt-link
         to="#"
@@ -140,7 +142,7 @@
             />
           </svg>
         </div>
-        <div class="flex-grow">Care wallet</div>
+        <div class="hidden md:block flex-grow">Care wallet</div>
       </nuxt-link>
       <nuxt-link
         to="#"
@@ -160,7 +162,7 @@
             />
           </svg>
         </div>
-        <div class="flex-grow">Messages</div>
+        <div class="hidden md:block flex-grow">Messages</div>
       </nuxt-link>
       <nuxt-link
         to="#"
@@ -180,7 +182,7 @@
             />
           </svg>
         </div>
-        <div class="flex-grow">Resources</div>
+        <div class="hidden md:block flex-grow">Resources</div>
       </nuxt-link>
 
       <hr class="bg-gray-300 w-full my-4" />
@@ -203,7 +205,7 @@
             />
           </svg>
         </div>
-        <div class="flex-grow">Account Settings</div>
+        <div class="hidden md:block flex-grow">Account Settings</div>
       </nuxt-link>
       <nuxt-link
         to="#"
@@ -223,10 +225,10 @@
             />
           </svg>
         </div>
-        <div class="flex-grow">Contact Support</div>
+        <div class="hidden md:block flex-grow">Contact Support</div>
       </nuxt-link>
-      <nuxt-link
-        to="/"
+      <div
+        @click="logout"
         class="link cursor-pointer hover:text-white text-gray-500 hover:font-bold w-full flex items-center tranform-translate duration-400 hover:bg-blue-800 pl-8 space-x-5 py-2"
       >
         <div class="w-6">
@@ -247,14 +249,24 @@
             />
           </svg>
         </div>
-        <div class="flex-grow">Logout</div>
-      </nuxt-link>
+        <div class="hidden md:block flex-grow">Logout</div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+import Cookies from 'js-cookie'
+
+export default {
+  name: 'sidebar',
+  methods: {
+    logout() {
+      Cookies.remove('apollo-token')
+      this.$router.push('/')
+    },
+  },
+}
 </script>
 <style scoped>
 .link:hover svg path {

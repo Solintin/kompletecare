@@ -2,7 +2,7 @@
   <div class="bg-gray-100">
     <div class="grid grid-cols-12 h-screen">
       <div class="col-span-2"><Sidebar /></div>
-      <div class="col-span-10 px-16 container mx-auto overflow-y-scroll">
+      <div class="col-span-10 px-6  md:px-16 container mx-auto overflow-y-scroll">
         <Main />
       </div>
     </div>

@@ -51,6 +51,7 @@
 </template>
 
 <script>
+import Cookies from 'js-cookie'
 import gql from 'graphql-tag'
 
 export default {
@@ -68,33 +69,47 @@ export default {
       loading: false,
     }
   },
+  created() {
+    // check if user is already logged in
+    const isLoggedIn = Cookies.get('apollo-token')
+    if (isLoggedIn) {
+      this.$router.push('/dashboard')
+    }
+  },
   methods: {
     async userLogin() {
-      this.error = ''
-      this.loading = true
-      this.$apollo
-        .mutate({
-          mutation: gql`
-            mutation login($email: String!, $password: String!) {
-              login(email: $email, password: $password)
-            }
-          `,
-          variables: {
-            email: this.email,
-            password: this.password,
-          },
-        })
-        .then((res) => {
-          const token = res.data.login
-          this.$apolloHelpers.onLogin(token)
-          this.loading = false
+      // check if user is already logged in
 
-          this.$router.push('/dashboard')
-        })
-        .catch((err) => {
-          this.error = err.message
-          this.loading = false
-        })
+      const isLoggedIn = Cookies.get('apollo-token')
+      if (!isLoggedIn) {
+        this.error = ''
+        this.loading = true
+        this.$apollo
+          .mutate({
+            mutation: gql`
+              mutation login($email: String!, $password: String!) {
+                login(email: $email, password: $password)
+              }
+            `,
+            variables: {
+              email: this.email,
+              password: this.password,
+            },
+          })
+          .then((res) => {
+            const token = res.data.login
+            this.$apolloHelpers.onLogin(token)
+            this.loading = false
+
+            this.$router.push('/dashboard')
+          })
+          .catch((err) => {
+            this.error = err.message
+            this.loading = false
+          })
+      } else {
+        this.$router.push('/dashboard')
+      }
     },
   },
 }
