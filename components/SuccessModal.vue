@@ -44,7 +44,7 @@ export default {
   methods: {
     closeModal() {
       this.isOpen = !this.isOpen
-      location.reload()
+     
     },
   },
 }
